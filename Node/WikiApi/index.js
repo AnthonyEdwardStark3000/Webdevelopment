@@ -109,7 +109,22 @@ app.route("/articles/:articleTitle")
         }
       }
     )
-});
+})
+
+.delete(function(req,res){
+   Article.deleteOne(
+     { title : req.params.articleTitle},function(err)
+     {
+       if(!err)
+       {
+         res.send("Selected Data has been deleted Successfully");
+       }
+       else {
+         res.send(err);
+       }
+     }
+   )
+})
 app.listen(3000,function(req,res){
   console.log("App started at port 3000");
 });
