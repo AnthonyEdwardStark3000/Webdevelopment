@@ -15,4 +15,14 @@
       <td>{{product.price}}</td>
     </tr>
   </table>
+  <br class="mt-3">
+
+    Product ID: <input type="text" placeholder="1234555" [(ngModel)]="newProduct._id">
+    <br>
+    Product Name: <input type="text" placeholder="MR.Stark" [(ngModel)]="newProduct.productname">
+    <br>
+    Product Cost: <input type="text" placeholder="200000000" [(ngModel)]="newProduct.price">
+    <br>
+    <input type="button" value="Add" (click)="onInsert()">
+    {{insertionStatus}}
 </div>
