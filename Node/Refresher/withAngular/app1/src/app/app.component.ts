@@ -11,18 +11,32 @@ export class AppComponent {
   productSearchvalue: String | undefined;
   products:Product[]=[];
 
+  //constructor is just common for everything
   constructor(@Inject(HttpClient) private httpClient: HttpClient)
   {
   }
 
+
+  // Retrieving the data
   onClicked(){
     this.httpClient.get<Product[]>("/getproducts?s="+this.productSearchvalue)
-    .subscribe
-    (
+    .subscribe(
       (response: Product[])=>
       {
           this.products = response;
       }
+    );
+  }
+    // Inserting the data
+  newProduct: Product = new Product;
+  insertionStatus: String ="";
+  onInsert(){
+    this.httpClient.post("/insertproduct",this.newProduct,
+     {responseType:"text"}).subscribe(
+    (response)=>
+    {
+      this.insertionStatus=response;
+    }
     );
   }
 

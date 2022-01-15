@@ -9,8 +9,8 @@
   "author": "Mr.Stark",
   "license": "ISC",
   "dependencies": {
-    "express": "latest",
-    "mongoose": "latest",
-    "nodemon": "^2.0.15"
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6"
   }
 }
