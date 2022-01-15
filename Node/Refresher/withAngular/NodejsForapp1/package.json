@@ -1,0 +1,16 @@
+{
+  "name": "nodejsforapp1",
+  "version": "1.0.0",
+  "description": "ProductManager app",
+  "main": "main.dd8c89de54093578.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mr.Stark",
+  "license": "ISC",
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "nodemon": "^2.0.15"
+  }
+}
