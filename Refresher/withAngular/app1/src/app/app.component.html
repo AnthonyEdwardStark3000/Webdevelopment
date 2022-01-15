@@ -1,0 +1,18 @@
+<div>
+  Search Products:
+  <input type="text" [(ngModel)]="productSearchvalue" style="margin-right: 1rem;">
+  <input type="button" value="Search" (click)="onClicked()">
+  <table>
+    <caption>Search results</caption>
+    <tr>
+      <th>Product ID</th>
+      <th>Product Name</th>
+      <th>Product Cost</th>
+    </tr>
+    <tr *ngFor="let product of products">
+      <td>{{product._id}}</td>
+      <td>{{product.productname}}</td>
+      <td>{{product.price}}</td>
+    </tr>
+  </table>
+</div>
