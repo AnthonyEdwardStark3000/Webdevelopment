@@ -27,8 +27,9 @@ export class AppComponent {
       }
     );
   }
+
     // Inserting the data
-  newProduct: Product = new Product;
+  newProduct: Product = new Product();
   insertionStatus: String ="";
   onInsert(){
     this.httpClient.post("/insertproduct",this.newProduct,
@@ -37,6 +38,37 @@ export class AppComponent {
     {
       this.insertionStatus=response;
     }
+    );
+  }
+
+  //Updating the data
+  updateProduct: Product = new Product();
+  updateStatus: String ="";
+
+  onUpdate()
+  {
+    this.httpClient.put("/updateproduct", this.updateProduct,
+    { responseType:"text"}).subscribe(
+      (response)=>
+      {
+        this.updateStatus= response;
+      },
+
+    );
+  }
+
+  //Deleting the data
+  deleteProductID :number | undefined;
+  deleteStatus : String ="";
+  onDelete()
+  {
+    this.httpClient.delete("/deleteProduct?_id="+this.deleteProductID,
+    { responseType:"text"}).subscribe(
+      (response)=>
+      {
+        this.deleteStatus= response;
+      },
+
     );
   }
 

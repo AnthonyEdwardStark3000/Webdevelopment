@@ -21,8 +21,25 @@
     <br>
     Product Name: <input type="text" placeholder="MR.Stark" [(ngModel)]="newProduct.productname">
     <br>
-    Product Cost: <input type="text" placeholder="200000000" [(ngModel)]="newProduct.price">
+    Product Cost: <input type="number" placeholder="200000000" [(ngModel)]="newProduct.price">
     <br>
     <input type="button" value="Add" (click)="onInsert()">
     {{insertionStatus}}
+    <br class="mt-3">
+    <h2>Update product</h2>
+    Current Product ID: <input type="text" placeholder="1234555" [(ngModel)]="updateProduct._id">
+    <br>
+    New Product Name: <input type="text" placeholder="Mr.Stark" [(ngModel)]="updateProduct.productname">
+    <br>
+    New Product Cost: <input type="number" placeholder="2000000000" [(ngModel)]="updateProduct.price">
+    <br>
+    <input type="button" value="Submit" (click)="onUpdate()">
+    {{updateStatus}}
+    <br class="mt-3">
+    <h2>Delete Product</h2>
+    Product ID: <input type="text" placeholder="1234555" [(ngModel)]="deleteProductID">
+    <br>
+    <input type="button" value="Delete" (click)="onDelete()">
+    <br>
+    {{deleteStatus}}
 </div>

@@ -70,3 +70,60 @@ app.post("/insertproduct",function(req,res){
         }
     });
 });
+
+//update
+app.put("/updateproduct",function(req,res){
+    console.log(req.body);
+    mongoose.connect("mongodb://localhost/Onlineshopping");
+    Products.findOne({_id:req.body._id},function(err,data){
+        if(err)
+        {
+            console.log(err);
+            res.status(500);
+            res.send(err);
+            mongoose.connection.close();
+        }
+        else
+        {
+            data.productname = req.body.productname;
+            data.price = req.body.price;
+            data.save(function(error){               
+                if(error)
+                {
+                    console.log(error);
+                    res.status(500);
+                    res.send(error);
+                    mongoose.connection.close();
+                }
+                else
+                {
+                    console.log("Data updated successfully");
+                    mongoose.connection.close();
+                    res.send("Data updated");
+                }
+            });
+        }
+    });
+});
+
+//Delete
+app.delete("/deleteProduct",function(req,res){
+    mongoose.connect("mongodb://localhost/Onlineshopping");
+    Products.remove({_id:req.query._id},function(err,data)
+    {   
+        if(err)
+        {
+            console.log(err);
+            res.status(500);
+            res.send(err);
+            mongoose.connection.close();
+        }
+        else
+        {
+            console.log("Product has been deleted Successfully");
+            res.send("Product has been deleted Successfully");
+            mongoose.connection.close();
+            console.log(data);
+        }
+    })
+})
