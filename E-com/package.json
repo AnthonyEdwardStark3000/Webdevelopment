@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7",
+    "nodemon": "^2.0.15"
+  },
+  "name": "e-com",
+  "version": "1.0.0",
+  "description": "To learn more about Required DB and connections",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyEdwardStark3000/MEAN_STACK.git"
+  },
+  "author": "Mr.Stark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnthonyEdwardStark3000/MEAN_STACK/issues"
+  },
+  "homepage": "https://github.com/AnthonyEdwardStark3000/MEAN_STACK#readme"
+}
