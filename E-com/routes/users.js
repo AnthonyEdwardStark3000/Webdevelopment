@@ -88,6 +88,7 @@ router.get("/:id",async function(req,res){
 
 router.post("/login",async function(req,res){
   const user = await User.findOne({email:req.body.email});
+  const secret = process.env.secret;//getting the secret from the environmental varibale this will be used for authentications
   if(!user)
   {
     res.status(500);
@@ -98,7 +99,9 @@ router.post("/login",async function(req,res){
   {
     const token = jwt.sign({
       userId: user.id
-    },'secret',{expiresIn:'1d'}
+    },
+    secret, //using the secret for auth
+    {expiresIn:'1d'} //expires in is used to make this token expire in a time i.e automatically logging out of the site.
   )
     res.status(200);
     res.send({user: user.email, token: token});
@@ -110,5 +113,8 @@ router.post("/login",async function(req,res){
     res.send("invalid password");
   }
 });
+
+//Next security is by checking whether the user is authenticated or not .So using JWT (Json Web Token) see helpers folder.
+
 
 module.exports =router;
