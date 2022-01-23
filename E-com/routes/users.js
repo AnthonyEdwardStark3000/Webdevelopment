@@ -86,6 +86,34 @@ router.get("/:id",async function(req,res){
   }).select('-passwordHash');
 });
 
+//function for checking the count of the users in our webapp need admin priviliges i.e token should be placed in auth->bearer
+router.get("/get/count", async (req, res) =>{
+  console.log("Users count");
+    const userCount = await User.countDocuments(function (count) {
+      return count;
+    }).clone();
+    if(!userCount) {
+        res.status(500).json({success: false})
+    }
+    res.send({
+        userCount: userCount
+    });
+});
+
+//function to delete the user by isAdmin
+router.delete("/:id",function(req,res){
+  User.deleteOne({_id:req.params.id},function(err,data){
+    if(err)
+    {
+      res.status(500);
+      res.send(err);
+    }
+    else {
+      res.send("User has been deleted Successfully");
+    }
+  });
+});
+
 router.post("/login",async function(req,res){
   const user = await User.findOne({email:req.body.email});
   const secret = process.env.secret;//getting the secret from the environmental varibale this will be used for authentications
@@ -98,7 +126,8 @@ router.post("/login",async function(req,res){
   if(user && bcrypt.compareSync(req.body.password, user.passwordHash))
   {
     const token = jwt.sign({
-      userId: user.id
+      userId: user.id,
+      isAdmin: user.isAdmin //getting this after authentication to check whether the user has admin privilages so that he could go to admin panel.Its done here bcz to eliminate the fake json login by another programming user.
     },
     secret, //using the secret for auth
     {expiresIn:'1d'} //expires in is used to make this token expire in a time i.e automatically logging out of the site.
@@ -109,7 +138,7 @@ router.post("/login",async function(req,res){
   else {
     res.status(400);
     console.log(req.body.password);
-    console.log(user.passwordHash);
+    // console.log(user.passwordHash);
     res.send("invalid password");
   }
 });

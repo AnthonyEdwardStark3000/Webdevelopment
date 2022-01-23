@@ -34,7 +34,7 @@ const ordersRoutes = require('./routes/orders');
 console.log(process.env.API_URL);
 app.use(`/categories`, categoriesRoutes);
 app.use(`/products`, productsRoutes);
-app.use(`/users`, usersRoutes);
+app.use("/users", usersRoutes);
 app.use(`/orders`, ordersRoutes);
 
 //Database
