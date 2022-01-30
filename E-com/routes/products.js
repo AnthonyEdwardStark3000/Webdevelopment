@@ -138,7 +138,7 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
 });
 
 
-router.put('/:id',async function(req, res){
+router.put('/:id',uploadOptions.single('image'),async function(req, res){
     if(!mongoose.isValidObjectId(req.params.id)) {
        return res.status(400);
        res.send("Invalid Product Id");
@@ -149,8 +149,28 @@ router.put('/:id',async function(req, res){
     return res.status(400);
     res.send("Invalid Category");
     }
+//what if the user wanted to update his existing image in the database so checking for any images with the put request
+    const product = await Product.findById(req.body.product);
+    if(!product)
+    {
+    return res.status(400);
+    res.send("Invalid product");
+    }
 
-    const product = await Product.findByIdAndUpdate(
+    const file = req.file;
+    let imagePath;
+
+    if(file)
+    {
+      const fileName = file.filename;
+      const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+      imagePath = `${basePath}${fileName}`
+    }
+    else {
+      imagePath = product.image;
+    }
+
+    const updatedproduct = await Product.findByIdAndUpdate(
         req.params.id,
         {
             name: req.body.name,
@@ -168,11 +188,11 @@ router.put('/:id',async function(req, res){
         { new: true}
     );
 
-    if(!product)
+    if(!updatedproduct)
     {
       return res.status(500).send('the product cannot be updated!');
     }
-    res.send(product);
+    res.send(updatedproduct);
 });
 router.delete("/:id",function(req,res){
   Product.deleteOne({_id:req.params.id},function(err,data){
@@ -219,30 +239,30 @@ router.get(`/get/featured/:count`, async (req, res) =>{
 });
 
 //to accept multiple images files and save it to the backend
-// router.put('/gallery-images/:id', uploadOptions.array('images', 10), async (req, res) => {
-//     if (!mongoose.isValidObjectId(req.params.id)) {
-//         return res.status(400).send('Invalid Product Id');
-//     }
-//     const files = req.files;
-//     let imagesPaths = [];
-//     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-//
-//     if (files) {
-//         files.map((file) => {
-//             imagesPaths.push(`${basePath}${file.filename}`);
-//         });
-//     }
-//
-//     const product = await Product.findByIdAndUpdate(
-//         req.params.id,
-//         {
-//             images: imagesPaths
-//         },
-//         { new: true }
-//     );
-//
-//     if (!product) return res.status(500).send('the gallery cannot be updated!');
-//
-//     res.send(product);
-// });
+router.put('/gallery-images/:id', uploadOptions.array('images', 10), async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).send('Invalid Product Id');
+    }
+    const files = req.files;
+    let imagesPaths = [];
+    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
+    if (files) {
+        files.map((file) => {
+            imagesPaths.push(`${basePath}${file.filename}`);
+        });
+    }
+
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            images: imagesPaths
+        },
+        { new: true }
+    );
+
+    if (!product) return res.status(500).send('the gallery cannot be updated!');
+
+    res.send(product);
+});
 module.exports =router;

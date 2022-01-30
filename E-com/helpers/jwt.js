@@ -13,6 +13,7 @@ function authJwt()
     }
   ).unless({
     path:[
+      { url:/\/public\/uploads(.*)/, methods:['GET','OPTIONS']}, //to get product lists before authentication.antthing after products/ in api is now accessible
       { url:'/products(.*)/', methods:['GET','OPTIONS']}, //to get product lists before authentication.antthing after products/ in api is now accessible
       { url:'/categories(.*)/', methods:['GET','OPTIONS']}, //to get categories lists before authentication.antthing after categories/ in api is now accessible
       '/users/login',

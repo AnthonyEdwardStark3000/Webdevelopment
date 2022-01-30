@@ -22,7 +22,7 @@ app.options('*', cors())
 //middleware
 app.use(bodyParser.json());
 // app.use(morgan('tiny'));
-
+app.use("/public/uploads",express.static(__dirname + "/public/uploads")); //for making the uploaded images available in the frontend without any authentication.
 
 //Routes
 const categoriesRoutes = require('./routes/categories');
