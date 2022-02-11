@@ -10,6 +10,10 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { BannerComponent } from './banner/banner.component';
+import { ProductsComponent } from './products/products.component';
+import { SliderComponent } from './slider/slider.component';
+import { LibUiComponent } from './lib-ui/lib-ui.component';
 
 const routes: Routes = [
   {
@@ -33,7 +37,11 @@ component: ProductListComponent
     HomePageComponent,
     ProductListComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    BannerComponent,
+    ProductsComponent,
+    SliderComponent,
+    LibUiComponent
   ],
   imports: [
   BrowserModule,

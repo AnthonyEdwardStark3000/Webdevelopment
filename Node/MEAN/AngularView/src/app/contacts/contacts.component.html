@@ -1,0 +1,19 @@
+<div class="container">
+  <div *ngFor="let contact of contacts">
+    <div class="row">
+    <div class="col-md-3">
+        {{contact.firstName}}
+    </div>
+    <div class="col-md-3">
+        {{contact.lastName}}
+    </div>
+    <div class="col-md-2">
+        {{contact.phone}}
+    </div>
+    <div class="col-md-3">
+      <input type="button" style="margin-right:1rem" value="Delete" (click)="DeleteContact(contact._id)">
+      <!-- <input type="button" value="Update" (click)="UpdateContact(contact._id)"> -->
+    </div>
+  </div>
+</div>
+</div>
