@@ -13,6 +13,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PostListComponent } from './posts/post-list/post-list.component';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
