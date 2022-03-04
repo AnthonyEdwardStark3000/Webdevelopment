@@ -12,7 +12,7 @@ import { PostsService } from '../posts.service';
 export class PostCreateComponent{
   enteredTitle ='';
   enteredContent ='';
-  
+
   constructor(public postsService: PostsService){}
 
    OnAddPost(form: NgForm){
@@ -22,7 +22,7 @@ export class PostCreateComponent{
      }
     const post: Post = {
       title: form.value.title, content: form.value.content,
-      id: 'd'
+      id: '',
     };
     this.postsService.addPost(form.value.title, form.value.content);
     form.resetForm();
