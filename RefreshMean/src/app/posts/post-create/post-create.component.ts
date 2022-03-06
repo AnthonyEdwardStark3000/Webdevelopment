@@ -13,7 +13,7 @@ import { PostsService } from '../posts.service';
 export class PostCreateComponent implements OnInit{
   enteredTitle ='';
   enteredContent ='';
-  private mode = 'create';
+  private mode = '';
   private postId: any;
   public post: Post | any;
 
@@ -39,12 +39,16 @@ export class PostCreateComponent implements OnInit{
      {
        return;
      }
-     if(this.mode === 'create')
+     if(this.mode == 'create')
      {
        this.postsService.addPost(form.value.title, form.value.content);
-     }else{
-       this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+       console.log("Create");
      }
+      else
+      {
+        this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+        console.log("update");
+      }
     const post: Post = {
       title: form.value.title, content: form.value.content,
       id: '',
