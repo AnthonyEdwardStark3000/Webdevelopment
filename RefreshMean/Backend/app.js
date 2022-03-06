@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
   next();
 });
@@ -32,12 +32,26 @@ app.post('/api/posts', (req, res, next)=>{
   });
 });
 
+app.put('api/posts/:id', (req, res , next)=>{
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content
+  });
+  Post.updateOne({_id: req.params.id}).then(result=>{
+    console.log(result);
+    res.status(200).json({message: 'Update Successful'});
+  });
+})
+
 app.get('/api/posts',(req, res, next)=>{
   PostModel.find().then(documents=>{
     res.status(200).json({ message:"posts structured successfully", posts: documents });
   });
   console.log("Datas");
 });
+
+
 
 app.delete('/api/posts/:id',(req, res, next)=>{
   // console.log(req.params.id);
