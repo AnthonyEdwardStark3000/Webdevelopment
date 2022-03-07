@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from 'src/app/post.model';
 import { PostsService } from '../posts.service';
@@ -16,11 +16,18 @@ export class PostCreateComponent implements OnInit{
   private mode = '';
   private postId: any;
   public post: Post | any;
+  form: FormGroup | any;
   isLoading = false;
 
   constructor(public postsService: PostsService, public route: ActivatedRoute){}
 
   ngOnInit(){
+    this.form = new FormGroup({
+      'title': new FormControl(null,
+         {validators: [Validators.required, Validators.minLength(3)]}),
+      'content': new FormControl(null,
+         {validators: [Validators.required]}),
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has('postId')){
          this.mode = 'edit';
@@ -32,6 +39,7 @@ export class PostCreateComponent implements OnInit{
            this.isLoading = false;
            // Spinner end
            this.post = {id: postData._id, title: postData.title, content: postData.content};
+          this.form.setValue({'title': this.post.title, 'content': this.post.content});
           });
       }
         else
@@ -42,28 +50,28 @@ export class PostCreateComponent implements OnInit{
     });
   }
 
-   OnSavePost(form: NgForm){
-     if(form.invalid)
+   OnSavePost(){
+     if(this.form.invalid)
      {
        return;
      }
      this.isLoading = true;
      if(this.mode === 'create')
      {
-       this.postsService.addPost(form.value.title, form.value.content);
+       this.postsService.addPost(this.form.value.title, this.form.value.content);
        console.log("Create");
      }
       else
       {
-        this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+        this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content);
         console.log("update");
       }
     const post: Post = {
-      title: form.value.title, content: form.value.content,
+      title: this.form.value.title, content: this.form.value.content,
       id: '',
     };
-    this.postsService.addPost(form.value.title, form.value.content);
-    form.resetForm();
+    this.postsService.addPost(this.form.value.title, this.form.value.content);
+    this.form.reset();
   }
 
 }
