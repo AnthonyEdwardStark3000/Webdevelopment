@@ -18,6 +18,8 @@ export class PostCreateComponent implements OnInit{
   public post: Post | any;
   form: FormGroup | any;
   isLoading = false;
+  imagePreview: any |string | undefined;
+
 
   constructor(public postsService: PostsService, public route: ActivatedRoute){}
 
@@ -53,12 +55,15 @@ export class PostCreateComponent implements OnInit{
     });
   }
 
-  onImagePicked(event: Event){
-   const file = (event.target as HTMLInputElement).files;
-   this.form.patchValue({image: file});
-   this.form.get('image').updateValueAndValidity();
-   console.log(file);
-   console.log(this.form);
+  onImagePicked(event: Event) {
+    const file: any = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    this.form.get("image").updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
 
 
