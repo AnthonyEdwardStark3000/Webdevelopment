@@ -4,10 +4,10 @@
   "description": "How to create public and private visibility with authentication by traversy Brad",
   "main": "index.js",
   "scripts": {
-     "start": "cross-env NODE_ENV=production node index",
-     "dev": "cross-env NODE_ENV=development nodemon index",
-     "postinstall": "node ./scripts/post-install.js"
-   },
+    "start": "cross-env NODE_ENV=production node index",
+    "dev": "cross-env NODE_ENV=development nodemon index",
+    "postinstall": "node ./scripts/post-install.js"
+  },
   "author": "Mr.Stark",
   "license": "ISC",
   "dependencies": {
