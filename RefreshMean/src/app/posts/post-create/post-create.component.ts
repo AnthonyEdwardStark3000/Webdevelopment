@@ -30,7 +30,7 @@ export class PostCreateComponent implements OnInit{
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
       image: new FormControl(null, {
-        validators: [Validators.required],
+      validators: [Validators.required],
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap)=>{
@@ -56,9 +56,14 @@ export class PostCreateComponent implements OnInit{
   }
 
   onImagePicked(event: Event) {
-    const file: any = (event.target as HTMLInputElement).files[0];
+    // const file: any = (event.target as HTMLInputElement).files[0]; to select first file from the array of files.
+    const file = (event.target as HTMLInputElement).files![0]; //to select the first file from the array of files but not null.
+    // console.log(file);
     this.form.patchValue({ image: file });
-    this.form.get("image").updateValueAndValidity();
+    this.form.get('image').updateValueAndValidity();
+    // console.log(file);
+    // console.log(this.form);
+
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result;
@@ -66,13 +71,23 @@ export class PostCreateComponent implements OnInit{
     reader.readAsDataURL(file);
   }
 
+  // onImagePicked(event: Event) {
+  //     const file = (event.target as HTMLInputElement).files[0];
+  //     this.form.patchValue({ image: file });
+  //   this.form.get("image").updateValueAndValidity();
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.imagePreview = reader.result;
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
+
 
    OnSavePost(){
      if(this.form.invalid)
        {
        return;
       }
-      console.log('checking errror fix');
       this.isLoading = true;
       if(this.mode === 'create')
       {
