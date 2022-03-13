@@ -3,16 +3,18 @@ import { AbstractControl } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 
 export const mimeType = (control: AbstractControl):Promise<{[key: string]: any}>| Observable<{[key: string]: any}> =>{
+  // if (typeof(control.value) === "string") {
+  //   return of(null);
+  // }
   const file = control.value as File;
   const fileReader = new FileReader();
-  const frObs = Observable.create((observer: Observer<{[key: string]: any}>)=>{
-    fileReader.addEventListener("loadend", ()=>{
-      const arr = new Uint8Array(fileReader.result).subarray(0, 4); //create 8 bit unsigned array
+  const frObs: any = new Observable((observer: any| Observer<{ [key: string]: any }>) => {
+    fileReader.addEventListener('loadend', () => {
+      const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4); //create 8 bit unsigned array
       let header = "";
       let isValid = false;
-      for(let i=0;i< arr.length; i++)
-      {
-        header+= arr[i].toString(16);
+      for (let i = 0; i < arr.length; i++) {
+        header += arr[i].toString(16);
       }
       switch (header) {
         case "89504e47":
@@ -37,7 +39,7 @@ export const mimeType = (control: AbstractControl):Promise<{[key: string]: any}>
       observer.complete();
     });
     fileReader.readAsArrayBuffer(file);
-  }
-  );
+  });
  return frObs;
 };
+
