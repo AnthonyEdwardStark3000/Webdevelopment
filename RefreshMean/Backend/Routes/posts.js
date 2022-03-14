@@ -27,15 +27,25 @@ const storage = multer.diskStorage({
   }
 });
 
-router.post('',multer(storage).single("image"), (req, res, next)=>{
+router.post('',multer({storage: storage}).single("image"), (req, res, next)=>{
+  const url = req.protocol+'://'+req.get("host");
   const post = new PostModel({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath:  url+"/images/"+req.file.filename,
   });
   // console.log(post);
   post.save().then(createdPost =>{
     // console.log(createdPost)
-    res.status(201).json({ message: "Post Added Successfully", postId: createdPost._id});
+    res.status(201).json({ message: "Post Added Successfully",
+     post:
+     {
+       ...createdPost, //simple nextgen way is to return an copy and the property that we need to override
+        id: createdPost._id
+        // title: createdPost.title,
+        // content: createdPost.content,
+        // imagePath: createdPost.imagePath,
+     }});
   });
 });
 

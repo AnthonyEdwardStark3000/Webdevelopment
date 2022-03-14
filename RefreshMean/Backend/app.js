@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const postsRoutes = require('./Routes/posts');
 const mongoose = require('mongoose');
@@ -12,6 +13,7 @@ mongoose.connect("mongodb+srv://MeanUploader:BnO1s5n8iLje0vUU@cluster0.urlgy.mon
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images", express.static(path.join("backend/images")));// for displaying images based on path, import Path
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
