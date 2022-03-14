@@ -1,11 +1,11 @@
 //mime-type.validator will have to get the file , Read it using file reader then check using mime type of the file
 import { AbstractControl } from "@angular/forms";
-import { Observable, Observer } from "rxjs";
+import { Observable, Observer, of } from "rxjs";
 
-export const mimeType = (control: AbstractControl):Promise<{[key: string]: any}>| Observable<{[key: string]: any}> =>{
-  // if (typeof(control.value) === "string") {
-  //   return of(null);
-  // }
+export const mimeType = (control: AbstractControl):Promise<{[key: string]: any}>| Observable<{[key: string]: any}> |any =>{
+  if (typeof(control.value) === "string") {
+    return of(null);
+  }
   const file = control.value as File;
   const fileReader = new FileReader();
   const frObs: any = new Observable((observer: any| Observer<{ [key: string]: any }>) => {
