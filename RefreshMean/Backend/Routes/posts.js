@@ -50,7 +50,7 @@ router.post('',multer({storage: storage}).single("image"), (req, res, next)=>{
   });
 });
 
-router.put('/:id', multer({storage: storage}).single("image"),  (req, res , next)=>{
+router.put('/:id', multer({storage: storage}).single("image"),(req, res , next)=>{
   let imagePath = req.body.imagePath;
   if(req.file)
   {
@@ -85,7 +85,7 @@ router.get('',(req, res, next)=>{
   PostModel.find().then(documents=>{
     res.status(200).json({ message:"posts structured successfully", posts: documents });
   });
-  // console.log("Datas");
+   console.log("Data");
 });
 
 
