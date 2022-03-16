@@ -6,7 +6,7 @@ const MIME_TYPE_MAP = {
   'image/png' : 'png',
   'image/jpeg' : 'jpg',
   'image/jpg' : 'jpg'
-};
+}; // for allowing only particular type of files.
 
 const storage = multer.diskStorage({
   destination: (req, file, cb)=>{
@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) =>{
     const name = file.originalname.toLowerCase().split(' ').join('-');
-    const ext = MIME_TYPE_MAP[file.mimetype]; //finding the file type
+    const ext = MIME_TYPE_MAP[file.mimetype]; //finding the file type i.e extension
     cb(null, name+'-'+Date.now()+'.'+ext);//callback to pass the information back to multer
   }
 });
@@ -40,7 +40,8 @@ router.post('',multer({storage: storage}).single("image"), (req, res, next)=>{
     res.status(201).json({ message: "Post Added Successfully",
      post:
      {
-       ...createdPost, //simple nextgen way is to return an copy and the property that we need to override
+       ...createdPost,
+       //simple next gen way is to return an copy and the property that we need to override
         id: createdPost._id
         // title: createdPost.title,
         // content: createdPost.content,
@@ -84,7 +85,7 @@ router.get('',(req, res, next)=>{
   PostModel.find().then(documents=>{
     res.status(200).json({ message:"posts structured successfully", posts: documents });
   });
-  console.log("Datas");
+  // console.log("Datas");
 });
 
 
