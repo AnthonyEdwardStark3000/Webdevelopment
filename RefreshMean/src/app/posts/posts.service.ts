@@ -8,25 +8,28 @@ import { Router } from '@angular/router';
 @Injectable({providedIn: 'root'})
 export class PostsService{
   private posts: Post[] = [];
-  private postsUpdated = new Subject<Post[]>();
+  private postsUpdated = new Subject<{posts: Post[], postCount: number}>();
 
   constructor(private http: HttpClient, private router: Router){}
 
-  getPosts()
+  getPosts(postsPerPage: number, currentPage: number)
   {
-    this.http.get<{message: String, posts: any}>('http://localhost:3000/api/posts').pipe(map((postData)=>{
-      return postData.posts.map((post:any) =>{
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`; // for dynamically adding values in normal String in parameter
+    this.http.get<{message: String, posts: any, maxPosts: number}>('http://localhost:3000/api/posts'+ queryParams).pipe(map((postData)=>{
+      return {
+        posts: postData.posts.map((post:any) =>{
         return {
           title: post.title,
           content: post.content,
           id: post._id,
           imagePath: post.imagePath
         }
-      });
-    }))
-    .subscribe((transformedPosts)=>{
-      this.posts = transformedPosts;
-      this.postsUpdated.next([...this.posts]);
+      }), maxPosts: postData.maxPosts};
+    })
+    )
+    .subscribe((transformedPostData)=>{
+      this.posts = transformedPostData.posts;
+      this.postsUpdated.next({ posts: [...this.posts], postCount: transformedPostData.maxPosts });
     });
     // return [...this.posts];
   }
@@ -85,6 +88,8 @@ export class PostsService{
     this.http.put('http://localhost:3000/api/posts/'+id, postData)
     .subscribe(response=>{
       const updatedPosts = [...this.posts];
+      console.log("updated Post:");
+      console.log(updatedPosts);
       const oldPostIndex = updatedPosts.findIndex( p=> p.id === id);
       const post: Post = {
           id: id,

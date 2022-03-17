@@ -82,8 +82,33 @@ router.get('/:id', (req, res, next)=>{
 })
 
 router.get('',(req, res, next)=>{
-  PostModel.find().then(documents=>{
-    res.status(200).json({ message:"posts structured successfully", posts: documents });
+  // console.log(req.query);
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const postQuery = PostModel.find(); //const created to store query as we may need to filter the search based on params of pagination
+  let fetchedPosts;
+  if(pageSize && currentPage)
+  {
+    console.log("Filtering");
+    console.log(pageSize);
+    console.log(currentPage);
+    postQuery.skip(pageSize * (currentPage - 1 )).limit(pageSize); // for skipping the items of previous pages
+  }
+  else
+  {
+    console.log(pageSize);
+    console.log("filtration failed");
+  }
+  postQuery.then(documents=>{
+    // res.status(200).json({ message:"posts fetched successfully", posts: documents });
+    fetchedPosts = document;
+    return PostModel.count();
+  }).then(count=>{
+    res.status(200).json({
+    message:"posts fetched successfully",
+    posts: fetchedPosts,
+    maxPosts: count
+  });
   });
    console.log("Data");
 });
