@@ -14,8 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule , FormsModule} from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    FormsModule,
     MatPaginatorModule
   ],
   providers: [],
