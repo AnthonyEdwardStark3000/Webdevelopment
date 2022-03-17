@@ -101,7 +101,7 @@ router.get('',(req, res, next)=>{
   }
   postQuery.then(documents=>{
     // res.status(200).json({ message:"posts fetched successfully", posts: documents });
-    fetchedPosts = document;
+    fetchedPosts = documents;
     return PostModel.count();
   }).then(count=>{
     res.status(200).json({

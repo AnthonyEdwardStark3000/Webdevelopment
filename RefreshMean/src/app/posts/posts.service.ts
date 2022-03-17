@@ -52,16 +52,16 @@ export class PostsService{
     postData.append("image", image, title); //for getting the image from the backend
     this.http.post<{message: String, post: Post}>('http://localhost:3000/api/posts', postData).subscribe((responseData)=>{
       // console.log(responseData);
-      const post: Post = {
-        id: responseData.post.id,
-        title: title,
-        content: content,
-        imagePath: responseData.post.imagePath
-      };
-        // const id = responseData.postId;
-        // post.id = id;
-      this.posts.push(post);
-      this.postsUpdated.next([...this.posts]);
+      // const post: Post = {
+      //   id: responseData.post.id,
+      //   title: title,
+      //   content: content,
+      //   imagePath: responseData.post.imagePath
+      // };
+      //   // const id = responseData.postId;
+      //   // post.id = id;
+      // this.posts.push(post);
+      // this.postsUpdated.next([...this.posts]);
       this.router.navigate(["/"]);
     });
   }
@@ -87,20 +87,20 @@ export class PostsService{
     // const post: Post = {id: id, title: title, content: content, imagePath:null};
     this.http.put('http://localhost:3000/api/posts/'+id, postData)
     .subscribe(response=>{
-      const updatedPosts = [...this.posts];
-      console.log("updated Post:");
-      console.log(updatedPosts);
-      const oldPostIndex = updatedPosts.findIndex( p=> p.id === id);
-      const post: Post = {
-          id: id,
-          title: title,
-          content: content,
-          imagePath: ''
-        // imagePath: response.imagePath
-      };
-      updatedPosts[oldPostIndex] = post;
-      this.posts = updatedPosts;
-      this.postsUpdated.next([...this.posts]);
+      // const updatedPosts = [...this.posts];
+      // console.log("updated Post:");
+      // console.log(updatedPosts);
+      // const oldPostIndex = updatedPosts.findIndex( p=> p.id === id);
+      // const post: Post = {
+      //     id: id,
+      //     title: title,
+      //     content: content,
+      //     imagePath: ''
+      //   // imagePath: response.imagePath
+      // };
+      // updatedPosts[oldPostIndex] = post;
+      // this.posts = updatedPosts;
+      // this.postsUpdated.next([...this.posts]);
       this.router.navigate(["/"]);
       console.log(response);
     });
@@ -128,12 +128,14 @@ export class PostsService{
   //     });
   // }
   deletePost(postId: String){
-    this.http.delete('http://localhost:3000/api/posts/'+postId).subscribe(()=>{
-      // console.log("Deleted");
-      const updatedPosts = this.posts.filter(post=> post.id !== postId);
-      this.posts = updatedPosts;
-      this.postsUpdated.next([...this.posts])
-    })
+    return this.http.delete('http://localhost:3000/api/posts/'+postId)
+    // .subscribe(()=>{
+    //   // console.log("Deleted");
+    //   const updatedPosts = this.posts.filter(post=> post.id !== postId);
+    //   this.posts = updatedPosts;
+    //   // this.postsUpdated.next([...this.posts])
+
+    // })
   }
 
 }
