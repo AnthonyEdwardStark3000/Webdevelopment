@@ -11,7 +11,7 @@ router.post("/signup", (req, res, _next)=>{
       // password: req.body.password bad idea to store it as raw data as anybody can access it, use bcrypt.
       password: hash
     });
-  user.save().then(result =>{
+   user.save().then(result =>{
     res.status(201).json({
       message: 'User created !',
       result: result

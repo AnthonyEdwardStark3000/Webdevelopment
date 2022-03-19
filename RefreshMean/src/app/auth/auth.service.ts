@@ -9,7 +9,11 @@ export class AuthService
   createUser(email: String, password: String)
   {
     const authData: AuthData = { email: email, password: password}
-    this.http.post("http://localhost:3000/api/user/signup", authData);
+    this.http.post("http://localhost:3000/api/user/signup", authData).subscribe(res=>{
+      console.log(res);
+    },err=>{
+      console.log(err);
+    });
     console.log("create User");
   }
 }
