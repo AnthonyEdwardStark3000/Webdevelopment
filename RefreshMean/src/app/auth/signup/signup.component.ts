@@ -15,8 +15,10 @@ export class SignupComponent{
        {
          return;
         }
-        else{
-        this.authService.createUser(form.value.email, form.value.password);
+        else
+        {
+          // console.log("Valid data entered");
+          this.authService.createUser(form.value.email, form.value.password);
       }
     // console.log(form.value);
   }

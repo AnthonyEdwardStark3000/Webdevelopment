@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const router = express.Router();
 
-router.post("/signup", function(req, res, next){
+router.post("/signup", (req, res, _next)=>{
   bcrypt.hash(req.body.password, 10).then(hash =>{
     const user = new User({
       email: req.body.email,
@@ -18,8 +18,9 @@ router.post("/signup", function(req, res, next){
     });
   }).catch(err =>{
     res.status(500).json({
-      error: err
+    message: "Invalid authentication Details"
     })
+    console.log(err);
   });
 });
 });
