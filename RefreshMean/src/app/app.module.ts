@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { ReactiveFormsModule , FormsModule} from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     SignupComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -45,7 +46,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     FormsModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

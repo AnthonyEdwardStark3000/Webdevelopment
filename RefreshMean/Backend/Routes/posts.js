@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const PostModel = require('../models/post');
 const multer = require('multer'); //for file upload to server
+const checkAuth = require('../middleware/check-auth'); // middleware for checking authentication, should be used before login
 const MIME_TYPE_MAP = {
   'image/png' : 'png',
   'image/jpeg' : 'jpg',
@@ -27,7 +28,8 @@ const storage = multer.diskStorage({
   }
 });
 
-router.post('',multer({storage: storage}).single("image"), (req, res, next)=>{
+router.post('', checkAuth,//for Authentication
+ multer({storage: storage}).single("image"), (req, res, next)=>{
   const url = req.protocol+'://'+req.get("host");
   const post = new PostModel({
     title: req.body.title,
@@ -50,7 +52,8 @@ router.post('',multer({storage: storage}).single("image"), (req, res, next)=>{
   });
 });
 
-router.put('/:id', multer({storage: storage}).single("image"),(req, res , next)=>{
+router.put('/:id', checkAuth,//for Authentication
+ multer({storage: storage}).single("image"),(req, res , next)=>{
   let imagePath = req.body.imagePath;
   if(req.file)
   {
